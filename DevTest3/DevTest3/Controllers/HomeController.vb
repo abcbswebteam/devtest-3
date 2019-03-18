@@ -21,11 +21,14 @@
         Dim result As Player = Nothing
 
         If Not String.IsNullOrEmpty(model.Name) Then
-            result = data.Where(Function(d) d.Name.Contains(model.Name)).FirstOrDefault()
+            result = data.Where(Function(d) d.Name.ToUpper().Contains(model.Name.ToUpper())).FirstOrDefault()
         End If
 
-        model.Name = result.Name
-        model.Ranking = result.Ranking
+        If (IsNothing(result) = False) Then
+            model.Name = result.Name
+            model.Ranking = result.Ranking
+        End If
+
 
         Return View(model)
 
