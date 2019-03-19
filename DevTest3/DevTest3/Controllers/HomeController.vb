@@ -17,15 +17,24 @@
     <HttpPost>
     Public Function GetPlayerRanking(model As GetPlayerRanking) As ActionResult
 
-        Dim data As List(Of Player) = Player.CreatePlayersList()
-        Dim result As Player = Nothing
-
-        If Not String.IsNullOrEmpty(model.Name) Then
-            result = data.Where(Function(d) d.Name.Contains(model.Name)).FirstOrDefault()
+        If (String.IsNullOrEmpty(model.Name)) Then
+            model.Message = "Please provide a player name to search."
+            Return View(model)
         End If
 
-        model.Name = result.Name
-        model.Ranking = result.Ranking
+        Dim data As List(Of Player) = Player.CreatePlayersList()
+        Dim result As Player = New Player()
+
+        If Not String.IsNullOrEmpty(model.Name) Then
+            result = data.Where(Function(d) d.Name.ToLower().Contains(model.Name.ToLower())).FirstOrDefault()
+        End If
+
+        If (result Is Nothing) Then
+            model.Message = "A player by that name was not found."
+        Else
+            model.Name = result.Name
+            model.Ranking = result.Ranking
+        End If
 
         Return View(model)
 
