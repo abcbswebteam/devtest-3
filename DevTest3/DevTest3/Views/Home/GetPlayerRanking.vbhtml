@@ -16,6 +16,7 @@ End Code
             <div class="form-group">
                 @Html.LabelFor(Function(m) m.Name, "Player Name")
                 @Html.TextBoxFor(Function(m) m.Name, New With {.class = "form-control"})
+                @Html.ValidationMessageFor(Function(m) m.Name)
             </div>
             <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
 

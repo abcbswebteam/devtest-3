@@ -17,7 +17,7 @@ Public Class Player
         For Each node As XmlNode In nodes
             Dim player As New Player
             player.Id = node.SelectSingleNode("Id").InnerText
-            player.Name = node.SelectSingleNode("Name").InnerText
+            player.Name = node.SelectSingleNode("Name").InnerText.ToLower()
             player.Ranking = Integer.Parse(node.SelectSingleNode("Ranking").InnerText)
             list.Add(player)
         Next

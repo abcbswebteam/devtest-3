@@ -1,4 +1,6 @@
-﻿Public Class HomeController
+﻿Imports System.ComponentModel.DataAnnotations
+
+Public Class HomeController
     Inherits System.Web.Mvc.Controller
 
     Function Index() As ActionResult
@@ -16,17 +18,17 @@
 
     <HttpPost>
     Public Function GetPlayerRanking(model As GetPlayerRanking) As ActionResult
+        If ModelState.IsValid Then
+            Dim data As List(Of Player) = Player.CreatePlayersList()
+            Dim result As Player = Nothing
 
-        Dim data As List(Of Player) = Player.CreatePlayersList()
-        Dim result As Player = Nothing
+            If Not String.IsNullOrEmpty(model.Name) Then
+                result = data.Where(Function(d) d.Name.Contains(model.Name.ToLower())).FirstOrDefault()
+            End If
 
-        If Not String.IsNullOrEmpty(model.Name) Then
-            result = data.Where(Function(d) d.Name.Contains(model.Name)).FirstOrDefault()
+            model.Name = result.Name
+            model.Ranking = result.Ranking
         End If
-
-        model.Name = result.Name
-        model.Ranking = result.Ranking
-
         Return View(model)
 
     End Function
