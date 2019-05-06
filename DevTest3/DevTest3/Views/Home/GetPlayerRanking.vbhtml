@@ -12,28 +12,30 @@ End Code
 @Using Html.BeginForm()
 
     @<div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(Function(m) m.Name, "Player Name")
-                @Html.TextBoxFor(Function(m) m.Name, New With {.class = "form-control"})
-            </div>
-            <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+         <div class="col-md-6">
+             <div class="form-group">
+                 @Html.LabelFor(Function(m) m.Name, "Player Name")
+                 @Html.TextBoxFor(Function(m) m.Name, New With {.class = "form-control"})
+             </div>
+             <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
 
-            @If Model.Ranking > 0 Then
-                @<div class="row">
-                    <div class="col-md-4">
-                        <h2>@Model.Name</h2>
-                        <p>
+             @If Model.Ranking > 0 Then
+                 @<div class="row">
+                     <div class="col-md-4">
+                         <h2>@Model.Name</h2>
+                         <p>
 
-                            <strong>Ranking:</strong>  @Model.Ranking
-                        </p>
+                             <strong>Ranking:</strong>  @Model.Ranking
+                         </p>
 
-                    </div>
+                     </div>
 
-                </div>
-            End If
+                 </div>
+             ElseIf Not String.IsNullOrEmpty(Model.Name) Then
+                @<p>No results found.</p>
+             End If
 
-        </div>
+         </div>
     </div>
 
 End Using 
