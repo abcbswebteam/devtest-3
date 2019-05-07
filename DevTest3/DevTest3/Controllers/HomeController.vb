@@ -19,13 +19,15 @@
 
         Dim data As List(Of Player) = Player.CreatePlayersList()
         Dim result As Player = Nothing
-
+        'when compairing string, it is better to match the case as well and trim it for avoid any blankspace
         If Not String.IsNullOrEmpty(model.Name) Then
-            result = data.Where(Function(d) d.Name.Contains(model.Name)).FirstOrDefault()
+            result = data.Where(Function(d) d.Name.ToLower().Trim() == model.Name.ToLower().Trim()).FirstOrDefault()
         End If
-
-        model.Name = result.Name
-        model.Ranking = result.Ranking
+            'If no data found then result would be NULL and so it can throw null object reference exception
+            if Not result Is NULL THEN    
+                model.Name = result.Name
+                model.Ranking = result.Ranking
+            END IF
 
         Return View(model)
 
