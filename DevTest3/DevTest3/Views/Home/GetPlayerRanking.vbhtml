@@ -19,19 +19,33 @@ End Code
             </div>
             <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
 
-            @If Model.Ranking > 0 Then
-                @<div class="row">
+            
+                <div class="row">
                     <div class="col-md-4">
                         <h2>@Model.Name</h2>
-                        <p>
 
-                            <strong>Ranking:</strong>  @Model.Ranking
+
+                        @*@If Model.Ranking = -1 Then
+                            @<p>
+                                <strong>Ranking :  </strong> "Please provide valid name to search"
+                            </p>
+                        ElseIf Model.Ranking = 0 Then
+                            @<p>
+                                <strong>Ranking :  </strong> "Player not found""
+                            </p>
+                        End if*@
+
+
+                        @IF Model.Ranking > 0 THEN
+                        @<p>
+                            <strong>Ranking :  </strong> @Model.Ranking
                         </p>
+                        End IF
 
                     </div>
 
                 </div>
-            End If
+          
 
         </div>
     </div>
