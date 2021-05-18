@@ -19,14 +19,23 @@
 
         Dim data As List(Of Player) = Player.CreatePlayersList()
         Dim result As Player = Nothing
+        Dim attemptedFetch As Boolean = False
 
         If Not String.IsNullOrEmpty(model.Name) Then
-            result = data.Where(Function(d) d.Name.Contains(model.Name)).FirstOrDefault()
+            attemptedFetch = True
+            result = data.Where(Function(d) d.Name.IndexOf(model.Name, 0, StringComparison.CurrentCultureIgnoreCase) > -1).FirstOrDefault()
         End If
 
-        model.Name = result.Name
-        model.Ranking = result.Ranking
-
+        If result IsNot Nothing Then
+            model.Name = result.Name
+            model.Ranking = result.Ranking
+        ElseIf attemptedFetch Then
+            model.Name = "Not Found"
+            model.Ranking = 0
+        Else
+            model.Name = Nothing
+            model.Ranking = -1
+        End If
         Return View(model)
 
     End Function
